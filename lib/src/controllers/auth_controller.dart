@@ -6,11 +6,14 @@ class AuthController {
     final body = await req.validate({
       "email": "required||email|min:3",
       "name": "required|string|min:5",
-      "password": "required|string|min:8"
+      "password": "required|string|min:8",
     });
 
     final data = await Auth.register(
-        name: body["name"], email: body["email"], password: body["password"]);
+      name: body["name"],
+      email: body["email"],
+      password: body["password"],
+    );
 
     return res
         .respond({"message": "User registered successfully", "data": data});

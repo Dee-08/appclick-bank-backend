@@ -24,8 +24,6 @@ class User extends Model<User> {
           ),
           Column(name: 'email', type: ColumnType.string, isUnique: true),
           Column(name: 'password', type: ColumnType.string),
-          Column(
-              name: 'phoneNumber', type: ColumnType.integer, isNullable: true),
         ],
       );
 
@@ -36,7 +34,6 @@ class User extends Model<User> {
         'email': email,
         'password': password,
         'profilePicUrl': profilePicUrl,
-        'phone number': phoneNumber,
         "created_at": createdAt
       };
 
@@ -47,7 +44,6 @@ class User extends Model<User> {
       ..name = map['name']
       ..email = map['email']
       ..password = map['password']
-      ..phoneNumber = map['phone number']
       ..createdAt = map["created_at"];
   }
 }

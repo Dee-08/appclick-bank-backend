@@ -26,6 +26,5 @@ void registerUserRoutes(Flint app) {
   app.put('/:id', AuthMiddleware().handle(controller.update));
 
   /// @prefix /users
-  /// @auth
   app.delete('/:id', AuthMiddleware().handle(controller.delete));
 }

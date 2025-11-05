@@ -69,10 +69,10 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: "1e445881f28f22d6140f181e07737b22f1e099a5e1ff94b0af2f9e4a463f4855"
+      sha256: c8ea0233063ba03258fbcf2ca4d6dadfefe14f02fab57702265467a19f27fadf
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.7"
   dart_jsonwebtoken:
     dependency: transitive
     description:
@@ -97,14 +97,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  flint_client:
+    dependency: transitive
+    description:
+      name: flint_client
+      sha256: "1921a1f06dbb55a16be86ed8d451d3d06bdc51aa2281814aa7399bdc57d554e7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1+2"
   flint_dart:
     dependency: "direct main"
     description:
       name: flint_dart
-      sha256: "5626a9ae3f93dee78e41319d74086ee165973f8ba5557de3a4286efe92f3f0d9"
+      sha256: "90ec49c15719dac8b1e4f032ddc8f1c0187f5b01d998540bc997c7bdf5877167"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+13"
+    version: "1.0.0+14"
   intl:
     dependency: transitive
     description:
@@ -125,10 +133,10 @@ packages:
     dependency: transitive
     description:
       name: mailer
-      sha256: db61f51ea301e8dcbfe5894e037ccd30a6246eb0a7bcfa007aefa2fc11a8f96e
+      sha256: c3b934c0e800ddc946167c0123a900eba5acd009abb73648d0191a742542f2b4
       url: "https://pub.dev"
     source: hosted
-    version: "6.5.0"
+    version: "6.6.0"
   meta:
     dependency: transitive
     description:
@@ -209,14 +217,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.3"
-  sprintf:
-    dependency: transitive
-    description:
-      name: sprintf
-      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
-      url: "https://pub.dev"
-    source: hosted
-    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -269,10 +269,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: a5be9ef6618a7ac1e964353ef476418026db906c4facdedaa299b7a2e71690ff
+      sha256: a11b666489b1954e01d992f3d601b1804a33937b5a8fe677bd26b8a9f96f96e8
       url: "https://pub.dev"
     source: hosted
-    version: "4.5.1"
+    version: "4.5.2"
   web:
     dependency: transitive
     description:
@@ -282,4 +282,4 @@ packages:
     source: hosted
     version: "1.1.1"
 sdks:
-  dart: ">=3.5.0 <4.0.0"
+  dart: ">=3.8.1 <4.0.0"
