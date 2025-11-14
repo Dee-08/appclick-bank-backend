@@ -109,10 +109,10 @@ packages:
     dependency: "direct main"
     description:
       name: flint_dart
-      sha256: "90ec49c15719dac8b1e4f032ddc8f1c0187f5b01d998540bc997c7bdf5877167"
+      sha256: "6fc8df9c8685407cdcf878ee3636c100bb3e7816d782b240cde6aea85b9eff07"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0+14"
+    version: "1.0.0+17"
   intl:
     dependency: transitive
     description:
