@@ -13,82 +13,64 @@
     }
   ],
   "paths": {
-    "/register": {
+    "/auth/register": {
       "post": {
-        "summary": "",
+        "summary": "Register new user",
         "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/login": {
-      "post": {
-        "summary": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/login-with-google": {
-      "post": {
-        "summary": "",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/users": {
-      "get": {
-        "summary": "Register a new user",
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
-    "/{id}": {
-      "get": {
-        "summary": "Get a user by ID",
-        "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "User registered successfully"
+          },
+          "422": {
+            "description": "Validation failed"
+          },
+          "409": {
+            "description": "User already exists"
+          },
+          "500": {
+            "description": "Registration failed"
           }
         },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Path parameter: id"
-          },
-          {
-            "name": "id",
-            "in": "path",
-            "schema": {
-              "type": "integer"
-            },
-            "required": true,
-            "description": "The ID of the user"
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  },
+                  "password_confirmation": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
           }
-        ]
+        }
       }
     },
-    "/users/": {
+    "/auth/login": {
       "post": {
-        "summary": "Create a new user",
+        "summary": "Login user",
         "responses": {
           "200": {
-            "description": "User registered successfully"
+            "description": "Login successful"
+          },
+          "422": {
+            "description": "Validation failed"
+          },
+          "401": {
+            "description": "Invalid credentials"
+          },
+          "500": {
+            "description": "Login failed"
           }
         },
         "requestBody": {
@@ -111,12 +93,81 @@
         }
       }
     },
-    "/users/{id}": {
-      "put": {
-        "summary": "",
+    "/auth/profile": {
+      "get": {
+        "summary": "Get user profile",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Profile retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "summary": "Logout user",
+        "responses": {
+          "200": {
+            "description": "Logout successful"
+          },
+          "500": {
+            "description": "Logout failed"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users/": {
+      "get": {
+        "summary": "Get all users",
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "summary": "Get user by ID",
+        "responses": {
+          "200": {
+            "description": "User retrieved successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [
@@ -128,14 +179,85 @@
               "type": "string"
             },
             "description": "Path parameter: id"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update user profile",
+        "responses": {
+          "200": {
+            "description": "User updated successfully"
+          },
+          "400": {
+            "description": "Invalid file type"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: id"
+          },
+          {
+            "name": "name",
+            "in": "formData",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "User's full name"
+          },
+          {
+            "name": "phone_number",
+            "in": "formData",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "User's phone number"
+          },
+          {
+            "name": "profile_pic",
+            "in": "formData",
+            "schema": {
+              "type": "file"
+            },
+            "required": false,
+            "description": "User's profile picture"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
           }
         ]
       },
       "delete": {
-        "summary": "",
+        "summary": "Delete user",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "User deleted successfully"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [
@@ -147,6 +269,322 @@
               "type": "string"
             },
             "description": "Path parameter: id"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/bvn": {
+      "post": {
+        "summary": "Upload BVN",
+        "responses": {
+          "200": {
+            "description": "BVN updated successfully"
+          },
+          "400": {
+            "description": "BVN must be 11 digits"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: id"
+          },
+          {
+            "name": "bvn",
+            "in": "formData",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "11-digit BVN"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/nin": {
+      "post": {
+        "summary": "Upload NIN",
+        "responses": {
+          "200": {
+            "description": "NIN updated successfully"
+          },
+          "400": {
+            "description": "NIN must be 11 digits"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: id"
+          },
+          {
+            "name": "nin",
+            "in": "formData",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "11-digit NIN"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/users/{id}/pin": {
+      "post": {
+        "summary": "Update PIN",
+        "responses": {
+          "200": {
+            "description": "PIN updated successfully"
+          },
+          "400": {
+            "description": "PIN must be 4-6 digits"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: id"
+          },
+          {
+            "name": "pin",
+            "in": "formData",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "4-6 digit PIN"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/wallet/balance/{account_number}": {
+      "get": {
+        "summary": "Get wallet balance by account number",
+        "responses": {
+          "200": {
+            "description": "Balance retrieved successfully"
+          },
+          "404": {
+            "description": "Account not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "account_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: account_number"
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/wallet/credit": {
+      "post": {
+        "summary": "Credit wallet by account number",
+        "responses": {
+          "200": {
+            "description": "Wallet credited successfully"
+          },
+          "400": {
+            "description": "Invalid input or account not found"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account_number": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": 1000.0
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "optional string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/wallet/debit": {
+      "post": {
+        "summary": "Debit wallet by account number",
+        "responses": {
+          "200": {
+            "description": "Wallet debited successfully"
+          },
+          "400": {
+            "description": "Invalid input, insufficient funds, or account not found"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "account_number": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": 1000.0
+                  },
+                  "reference": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "optional string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/wallet/transfer": {
+      "post": {
+        "summary": "Transfer between accounts",
+        "responses": {
+          "200": {
+            "description": "Transfer completed successfully"
+          },
+          "400": {
+            "description": "Invalid input, insufficient funds, or accounts not found"
+          }
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "from_account": {
+                    "type": "string"
+                  },
+                  "to_account": {
+                    "type": "string"
+                  },
+                  "amount": {
+                    "type": 1000.0
+                  },
+                  "description": {
+                    "type": "optional string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/wallet/transactions/{account_number}": {
+      "get": {
+        "summary": "Get transaction history by account number",
+        "responses": {
+          "200": {
+            "description": "Transactions retrieved successfully"
+          },
+          "404": {
+            "description": "Account not found"
+          }
+        },
+        "parameters": [
+          {
+            "name": "account_number",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Path parameter: account_number"
           }
         ],
         "security": [
