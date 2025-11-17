@@ -121,7 +121,7 @@ class User extends Model<User> {
 
   /// Find user by account number
   static Future<User?> findByAccountNumber(String accountNumber) async {
-    final results = await User().where('account_number', accountNumber);
-    return results.isNotEmpty ? results.first : null;
+    final result = await User().where('account_number', accountNumber).first();
+    return result;
   }
 }
