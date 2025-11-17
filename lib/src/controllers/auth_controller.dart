@@ -12,8 +12,8 @@ class AuthController {
       });
 
       // Check if user already exists
-      final existingUser = await User().where('email', body['email']);
-      if (existingUser.isNotEmpty) {
+      final existingUser = await User().where('email', body['email']).first();
+      if (existingUser != null) {
         return res.status(409).json({
           "status": "error",
           "message": "User with this email already exists"
@@ -76,8 +76,7 @@ class AuthController {
       final token = await Auth.login(body['email'], body["password"]);
 
       // Get user data with account number
-      final user = await User().where('email', body['email']);
-      final userData = user.isNotEmpty ? user.first : null;
+      final userData = await User().where('email', body['email']).first();
 
       return res.json({
         "status": "success",

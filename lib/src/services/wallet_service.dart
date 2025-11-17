@@ -10,8 +10,7 @@ class WalletService {
     if (user == null)
       throw Exception('User with account $accountNumber not found');
 
-    final wallets = await Wallet().where('user_id', user.id!);
-    final wallet = wallets.isNotEmpty ? wallets.first : null;
+    final wallet = await Wallet().where('user_id', user.id!).first();
 
     if (wallet != null) return wallet;
 
@@ -30,8 +29,8 @@ class WalletService {
     final user = await User.findByAccountNumber(accountNumber);
     if (user == null) return null;
 
-    final wallets = await Wallet().where('user_id', user.id!);
-    return wallets.isNotEmpty ? wallets.first : null;
+    final wallet = await Wallet().where('user_id', user.id!).first();
+    return wallet;
   }
 
   /// CREDIT wallet by account number
@@ -46,8 +45,7 @@ class WalletService {
     final user = await User.findByAccountNumber(accountNumber);
     if (user == null) throw Exception('Account $accountNumber not found');
 
-    final wallets = await Wallet().where('user_id', user.id!);
-    Wallet? wallet = wallets.isNotEmpty ? wallets.first : null;
+    var wallet = await Wallet().where('user_id', user.id!).first();
 
     if (wallet == null) {
       wallet = Wallet()
@@ -93,8 +91,7 @@ class WalletService {
     final user = await User.findByAccountNumber(accountNumber);
     if (user == null) throw Exception('Account $accountNumber not found');
 
-    final wallets = await Wallet().where('user_id', user.id!);
-    final wallet = wallets.isNotEmpty ? wallets.first : null;
+    final wallet = await Wallet().where('user_id', user.id!).first();
 
     if (wallet == null)
       throw Exception('Wallet not found for account $accountNumber');
@@ -145,14 +142,12 @@ class WalletService {
       throw Exception('Receiver account $toAccountNumber not found');
 
     // Get or create wallets
-    final fromWallets = await Wallet().where('user_id', fromUser.id!);
-    final fromWallet = fromWallets.isNotEmpty ? fromWallets.first : null;
+    final fromWallet = await Wallet().where('user_id', fromUser.id!).first();
+
     if (fromWallet == null) throw Exception('Sender wallet not found');
 
-    final toWallets = await Wallet().where('user_id', toUser.id!);
-    Wallet toWallet = toWallets.isNotEmpty
-        ? toWallets.first
-        : await getOrCreateWalletForUserByAccount(toAccountNumber);
+    final toWallet = await Wallet().where('user_id', toUser.id!).first() ??
+        await getOrCreateWalletForUserByAccount(toAccountNumber);
 
     // Check sufficient funds
     if ((fromWallet.balance ?? 0) < amount)
@@ -216,7 +211,7 @@ class WalletService {
     final user = await User.findByAccountNumber(accountNumber);
     if (user == null) throw Exception('Account $accountNumber not found');
 
-    final wallets = await Wallet().where('user_id', user.id!);
+    final wallets = await Wallet().where('user_id', user.id!).get();
     final wallet = wallets.isNotEmpty ? wallets.first : null;
 
     return wallet?.balance ?? 0.0;
@@ -228,6 +223,6 @@ class WalletService {
     final user = await User.findByAccountNumber(accountNumber);
     if (user == null) throw Exception('Account $accountNumber not found');
 
-    return await WalletTransaction().where('user_id', user.id!);
+    return await WalletTransaction().where('user_id', user.id!).get();
   }
 }
