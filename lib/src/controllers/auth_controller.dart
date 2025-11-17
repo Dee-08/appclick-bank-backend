@@ -1,10 +1,6 @@
+import 'package:appclick_bank_backend/src/models/user_model.dart';
 import 'package:flint_dart/auth.dart';
 import 'package:flint_dart/flint_dart.dart';
-<<<<<<< HEAD
-import 'package:flint_dart/helper.dart';
-=======
-import 'package:appclick_bank_backend/src/models/user_model.dart';
->>>>>>> 1b0b67728a1f7003a77f78c5df77d4663e22a026
 
 class AuthController {
   Future<Response> register(Request req, Response res) async {
