@@ -36,7 +36,8 @@ class User extends Model<User> {
           Column(name: 'name', type: ColumnType.string),
           Column(name: 'email', type: ColumnType.string, isUnique: true),
           Column(name: 'password', type: ColumnType.string),
-          Column(name: 'phone_number', type: ColumnType.string),
+          Column(
+              name: 'phone_number', type: ColumnType.string, isNullable: true),
           Column(
               name: 'profile_pic_url',
               type: ColumnType.string,
@@ -47,20 +48,39 @@ class User extends Model<User> {
               name: 'account_number',
               type: ColumnType.string,
               isUnique: true,
-              defaultValue: 'NULL'), // Will be generated
-          Column(name: 'bvn', type: ColumnType.string, isUnique: true),
-          Column(name: 'nin', type: ColumnType.string, isUnique: true),
+              isNullable: true), // Will be generated
+          Column(
+              name: 'bvn',
+              type: ColumnType.string,
+              isUnique: true,
+              isNullable: true),
+          Column(
+              name: 'pin',
+              type: ColumnType.string,
+              isUnique: true,
+              isNullable: true),
+          Column(
+              name: 'nin',
+              type: ColumnType.string,
+              isUnique: true,
+              isNullable: true),
 
           // KYC
-          Column(name: 'kyc_status', type: ColumnType.string),
+          Column(name: 'kyc_status', type: ColumnType.string, isNullable: true),
           Column(name: 'address', type: ColumnType.string, isNullable: true),
           Column(
               name: 'date_of_birth', type: ColumnType.string, isNullable: true),
           Column(name: 'gender', type: ColumnType.string, isNullable: true),
 
           // Wallet
-          Column(name: 'wallet_balance', type: ColumnType.double),
-          Column(name: 'ledger_balance', type: ColumnType.double),
+          Column(
+              name: 'wallet_balance',
+              type: ColumnType.double,
+              isNullable: true),
+          Column(
+              name: 'ledger_balance',
+              type: ColumnType.double,
+              isNullable: true),
         ],
       );
 
@@ -108,8 +128,7 @@ class User extends Model<User> {
       ..dateOfBirth = map['date_of_birth']
       ..gender = map['gender']
       ..walletBalance = map['wallet_balance']?.toDouble()
-      ..ledgerBalance = map['ledger_balance']?.toDouble()
-      ..createdAt = map['created_at'];
+      ..ledgerBalance = map['ledger_balance']?.toDouble();
   }
 
   /// Generate a unique 10-digit account number

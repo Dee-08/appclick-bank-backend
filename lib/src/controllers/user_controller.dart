@@ -116,7 +116,7 @@ class UserController {
       final String userId = req.params['id']!;
       final body = await req.form();
       final bvn = body['bvn'];
-
+      print(bvn);
       if (bvn == null || bvn.length != 11) {
         return res.status(400).json({
           "status": "error",

@@ -11,7 +11,7 @@ void registerAuthRoutes(Flint app) {
   /// @response 422 Validation failed
   /// @response 409 User already exists
   /// @response 500 Registration failed
-  app.post("/auth/register", controller.register);
+  app.post("/register", controller.register);
 
   /// @summary Login user
   /// @body {"email": "string", "password": "string"}
@@ -19,7 +19,7 @@ void registerAuthRoutes(Flint app) {
   /// @response 422 Validation failed
   /// @response 401 Invalid credentials
   /// @response 500 Login failed
-  app.post("/auth/login", controller.login);
+  app.post("/login", controller.login);
 
   /// @summary Get user profile
   /// @auth bearer
@@ -27,11 +27,11 @@ void registerAuthRoutes(Flint app) {
   /// @response 401 Unauthorized
   /// @response 404 User not found
   /// @response 500 Internal server error
-  app.get("/auth/profile", AuthMiddleware().handle(controller.profile));
+  app.get("/profile", AuthMiddleware().handle(controller.profile));
 
   /// @summary Logout user
   /// @auth bearer
   /// @response 200 Logout successful
   /// @response 500 Logout failed
-  app.post("/auth/logout", AuthMiddleware().handle(controller.logout));
+  app.post("/logout", AuthMiddleware().handle(controller.logout));
 }

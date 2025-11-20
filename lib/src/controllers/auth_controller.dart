@@ -25,34 +25,20 @@ class AuthController {
 
       // Register user with Auth system
       final authData = await Auth.register(
-        name: body["name"],
-        email: body["email"],
-        password: body["password"],
-      );
-
-      // Update user with account number and initial wallet balance
-      final user = await User().find(authData['user']['id']);
-      if (user != null) {
-        await user.update(user.id!, {
-          'account_number': accountNumber,
-          'wallet_balance': 0.0,
-          'ledger_balance': 0.0,
-          'kyc_status': 'pending'
-        });
-      }
+          name: body["name"],
+          email: body["email"],
+          password: body["password"],
+          additionalData: {
+            'account_number': accountNumber,
+            'wallet_balance': 0.0,
+            'ledger_balance': 0.0,
+            'kyc_status': 'pending'
+          });
 
       return res.status(201).json({
         "status": "success",
         "message": "User registered successfully",
-        "data": {
-          "user": {
-            "id": authData['user']['id'],
-            "name": authData['user']['name'],
-            "email": authData['user']['email'],
-            "account_number": accountNumber,
-          },
-          "token": authData['token'],
-        }
+        "data": authData
       });
     } on ValidationException catch (e) {
       return res.status(422).json({
